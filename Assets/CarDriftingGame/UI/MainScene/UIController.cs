@@ -1,56 +1,52 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.OnScreen;
 using UnityEngine.UI;
 
 namespace CarDriftingGame.UI.MainScene
 {
-    public class UIController : MonoBehaviour
+    public enum Direction
     {
-        [Header("All UI")]
-        [SerializeField] private Button _gasButton;
-        [SerializeField] private Button _brakeButton;
-        [SerializeField] private Button _turnRightButton;
-        [SerializeField] private Button _turnLeftButton;
+        None,
+        Up,
+        Down,
+        Left,
+        Right
+    }
+    
+    public class UIController : IUpdatable
+    {
+        public event Action<Vector2> InputPressed; 
 
-        public event Action<bool> GasPressed;
-        public event Action<bool> BrakePressed;
-        public event Action<bool> TurnRightPressed;
-        public event Action<bool> TurnLeftPressed;
+        private Vector2 _inputDir;
+        private CarInput _carInput;
+        private Direction _currentDirection = Direction.None;
 
-        private bool _isGasPressed;
-        private bool _isBrakePressed;
-        private bool _isTurnRightPressed;
-        private bool _isTurnLeftPressed;
-
-        public void Initialize()
+        public void Initialize(CarInput carInput, Button gasButton, Button brakeButton, Button rightButton, Button leftButton)
         {
-            _gasButton.onClick.AddListener(OnGasClicked);
-            _brakeButton.onClick.AddListener(OnBrakeClicked);
-            _turnRightButton.onClick.AddListener(OnTurnRightClicked);
-            _turnLeftButton.onClick.AddListener(OnTurnLeftClicked);
+            _carInput = carInput;
+            
+            ConnectButtonToKeyCode(gasButton, "<Keyboard>/w");
+            ConnectButtonToKeyCode(brakeButton, "<Keyboard>/s");
+            ConnectButtonToKeyCode(rightButton, "<Keyboard>/d");
+            ConnectButtonToKeyCode(leftButton, "<Keyboard>/a");
         }
 
-        private void OnButtonClicked(ref bool state, Action<bool> action)
+        public void Update()
         {
-            state = !state;
-            action?.Invoke(state);
+            GetInvokeInput();
         }
-        
-        private void OnGasClicked()
+
+        private void GetInvokeInput()
         {
-            OnButtonClicked(ref _isGasPressed, GasPressed);
+            _inputDir = _carInput.UI.Move.ReadValue<Vector2>();
+            InputPressed?.Invoke(_inputDir);
         }
-        private void OnBrakeClicked()
+
+        private void ConnectButtonToKeyCode(Button button, string keyCode)
         {
-            OnButtonClicked(ref _isBrakePressed, BrakePressed);
-        }
-        private void OnTurnRightClicked()
-        {
-            OnButtonClicked(ref _isTurnRightPressed, TurnRightPressed);
-        }
-        private void OnTurnLeftClicked()
-        {
-            OnButtonClicked(ref _isTurnLeftPressed, TurnLeftPressed);
+            button.gameObject.AddComponent<OnScreenButton>().controlPath = keyCode;
         }
     }
 }

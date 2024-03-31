@@ -1,15 +1,22 @@
+using CarDriftingGame.UI.MainScene;
 using UnityEngine;
 
 namespace CarDriftingGame.System.Input
 {
     public class InputManager
     {
-        public Vector2 Horizontal { get; private set; }
-
-        public Vector2 Vertical { get; private set; }
+        public float Vertical { get; private set; }
+        public float Horizontal { get; private set; }
         
-        public bool Gasing { get; private set; }
+        public void Initialize(UIController uiController)
+        {
+            uiController.InputPressed += SetInput;
+        }
 
-        public bool Braking { get; private set; }
+        private void SetInput(Vector2 value)
+        {
+            Vertical = value.y;
+            Horizontal = value.x;
+        }
     }
 }
