@@ -8,6 +8,7 @@ TagManager:
   - BrakeButton
   - RightButton
   - LeftButton
+  - LightButton
   layers:
   - Default
   - TransparentFX

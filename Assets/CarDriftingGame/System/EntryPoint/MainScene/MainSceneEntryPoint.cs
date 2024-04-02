@@ -22,6 +22,7 @@ namespace CarDriftingGame.System.EntryPoint.MainScene
         private Button _brakeButton;
         private Button _leftButton;
         private Button _rightButton;
+        private Button _lightButton;
 
         [Inject]
         private void Construct(InputManager inputManager, UIController uiController)
@@ -45,7 +46,7 @@ namespace CarDriftingGame.System.EntryPoint.MainScene
             
             GetButtons();
 
-            _uiController.Initialize(_carInput, _gasButton, _brakeButton, _rightButton, _leftButton);
+            _uiController.Initialize(_carInput, _gasButton, _brakeButton, _rightButton, _leftButton, _lightButton);
             _inputManager.Initialize(_uiController);
         }
 
@@ -60,6 +61,7 @@ namespace CarDriftingGame.System.EntryPoint.MainScene
             _brakeButton = GameObject.FindWithTag(_uiConfig.BrakeButtonTag).GetComponent<Button>();
             _rightButton = GameObject.FindWithTag(_uiConfig.TurnRightButtonTag).GetComponent<Button>();
             _leftButton = GameObject.FindWithTag(_uiConfig.TurnLeftButtonTag).GetComponent<Button>(); 
+            _lightButton = GameObject.FindWithTag(_uiConfig.LightButtonTag).GetComponent<Button>(); 
         }
 
         private void InitializeUpdater()

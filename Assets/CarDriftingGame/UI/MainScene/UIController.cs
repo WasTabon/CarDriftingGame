@@ -17,12 +17,13 @@ namespace CarDriftingGame.UI.MainScene
     public class UIController : IUpdatable
     {
         public event Action<Vector2> InputPressed; 
+        public event Action LightPressed; 
 
         private Vector2 _inputDir;
         private CarInput _carInput;
         private Direction _currentDirection = Direction.None;
 
-        public void Initialize(CarInput carInput, Button gasButton, Button brakeButton, Button rightButton, Button leftButton)
+        public void Initialize(CarInput carInput, Button gasButton, Button brakeButton, Button rightButton, Button leftButton, Button lightButton)
         {
             _carInput = carInput;
             
@@ -30,6 +31,8 @@ namespace CarDriftingGame.UI.MainScene
             ConnectButtonToKeyCode(brakeButton, "<Keyboard>/s");
             ConnectButtonToKeyCode(rightButton, "<Keyboard>/d");
             ConnectButtonToKeyCode(leftButton, "<Keyboard>/a");
+            
+            lightButton.onClick.AddListener(() => LightPressed?.Invoke());
         }
 
         public void Update()
@@ -46,6 +49,11 @@ namespace CarDriftingGame.UI.MainScene
         private void ConnectButtonToKeyCode(Button button, string keyCode)
         {
             button.gameObject.AddComponent<OnScreenButton>().controlPath = keyCode;
+        }
+
+        private void AssignButtonToEvent(Button button, Action action)
+        {
+            button.onClick.AddListener(() => action?.Invoke());
         }
     }
 }

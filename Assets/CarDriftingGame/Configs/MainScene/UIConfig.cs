@@ -11,6 +11,7 @@ namespace CarDriftingGame.Configs.MainScene
         [SerializeField] private string _brakeButtonTag;
         [SerializeField] private string _turnRightButtonTag;
         [SerializeField] private string _turnLeftButtonTag;
+        [SerializeField] private string _lightButtonTag;
 
         [SerializeField] private OnScreenControl _key;
         
@@ -18,5 +19,6 @@ namespace CarDriftingGame.Configs.MainScene
         public string BrakeButtonTag => _brakeButtonTag;
         public string TurnRightButtonTag => _turnRightButtonTag;
         public string TurnLeftButtonTag => _turnLeftButtonTag;
+        public string LightButtonTag => _lightButtonTag;
     }
 }

@@ -16,3 +16,5 @@ MonoBehaviour:
   _brakeButtonTag: BrakeButton
   _turnRightButtonTag: RightButton
   _turnLeftButtonTag: LeftButton
+  _lightButtonTag: LightButton
+  _key: {fileID: 0}
