@@ -1,4 +1,3 @@
-using System;
 using CarDriftingGame.Configs.MainScene;
 using CarDriftingGame.Levels.MainScene;
 using CarDriftingGame.System.Input;

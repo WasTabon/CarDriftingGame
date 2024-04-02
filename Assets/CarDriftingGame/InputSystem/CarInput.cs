@@ -63,7 +63,7 @@ public partial class @CarInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""a71855fe-fa2e-48f1-9f58-3919487bc0f3"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

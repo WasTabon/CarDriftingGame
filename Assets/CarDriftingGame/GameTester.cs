@@ -1,4 +1,3 @@
-using System;
 using CarDriftingGame.System.Input;
 using UnityEngine;
 using Zenject;
