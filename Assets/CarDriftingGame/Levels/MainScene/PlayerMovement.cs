@@ -46,8 +46,7 @@ namespace CarDriftingGame.Levels.MainScene
         private float _verticalInput;
         private float _horizontalInput;
 
-        public float sidewaysSlipThreshold = 0.5f;
-        public float steerAngleThreshold = 30f;
+        private float _sidewaysSlipThreshold = 0.5f;
 
         [Inject]
         private void Construct(InputManager inputManager)
@@ -116,7 +115,7 @@ namespace CarDriftingGame.Levels.MainScene
                 WheelHit hit;
 
                 bool isGroundHit = wheel.wheelCollider.GetGroundHit(out hit);
-                bool isSidewaySlip = Mathf.Abs(hit.sidewaysSlip) > sidewaysSlipThreshold;
+                bool isSidewaySlip = Mathf.Abs(hit.sidewaysSlip) > _sidewaysSlipThreshold;
 
                 if (isGroundHit && isSidewaySlip)
                 {
