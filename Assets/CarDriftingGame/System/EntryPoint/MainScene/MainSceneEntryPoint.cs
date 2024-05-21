@@ -10,6 +10,9 @@ namespace CarDriftingGame.System.EntryPoint.MainScene
 {
     public class MainSceneEntryPoint : MonoBehaviour
     {
+        [SerializeField] private Player _player;
+        [SerializeField] private Transform _spawnPos;
+        
         [SerializeField] private UIConfig _uiConfig;
 
         private InputManager _inputManager;
@@ -48,6 +51,9 @@ namespace CarDriftingGame.System.EntryPoint.MainScene
 
             _uiController.Initialize(_carInput, _gasButton, _brakeButton, _rightButton, _leftButton, _lightButton);
             _inputManager.Initialize(_uiController);
+
+            GameObject player = Instantiate(_player.gameObject, _spawnPos.position, Quaternion.identity);
+            player.GetComponent<Player>().Initialize(_inputManager);
         }
 
         private void CreateInputSystem()

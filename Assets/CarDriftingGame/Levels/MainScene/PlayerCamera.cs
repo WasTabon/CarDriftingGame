@@ -2,24 +2,26 @@ using UnityEngine;
 
 namespace CarDriftingGame.Levels.MainScene
 {
-    public class PlayerCamera : MonoBehaviour
+    public class PlayerCamera
     {
-        [SerializeField] private Transform _camera;
+        private Transform _camera;
     
-        [SerializeField] private float _moveSmoothness;
-        [SerializeField] private float _rotSmoothness;
+        private float _moveSmoothness = 5;
+        private float _rotSmoothness = 7;
 
-        [SerializeField] private Vector3 _moveOffset;
-        [SerializeField] private Vector3 _rotOffset;
+        private Vector3 _moveOffset;
+        private Vector3 _rotOffset;
 
-        [SerializeField] private Transform _target;
+        private Transform _target;
 
-        private void FixedUpdate()
+        public PlayerCamera(Transform camera, Transform target)
         {
-            HandleMovement();
-            HandleRotation();
+            _moveOffset = new Vector3(0, 6, -7);
+            
+            _camera = camera;
+            _target = target;
         }
-
+        
         public void HandleMovement()
         {
             var targetPos = _target.TransformPoint(_moveOffset);

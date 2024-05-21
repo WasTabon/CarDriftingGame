@@ -1,15 +1,14 @@
-using System;
 using UnityEngine;
 
 namespace CarDriftingGame.Levels.MainScene
 {
-    public class EngineSounds : MonoBehaviour
+    public class EngineSounds
     {
-        [SerializeField] private float _minSpeed;
-        [SerializeField] private float _maxSpeed;
+        private float _minSpeed;
+        private float _maxSpeed;
         
-        [SerializeField] private float _minPitch;
-        [SerializeField] private float _maxPitch;
+        private float _minPitch;
+        private float _maxPitch;
 
         private Rigidbody _rigidbody;
         private AudioSource _audioSource;
@@ -17,17 +16,17 @@ namespace CarDriftingGame.Levels.MainScene
         private float _currentSpeed;
         private float _pitchFromCar;
 
-        private void Start()
+        public void SetMinSpeed(float amount) => _minSpeed = amount;
+        public void SetMaxSpeed(float amount) => _maxSpeed = amount;
+        public void SetMinPitch(float amount) => _minPitch = amount;
+        public void SetMaxPitch(float amount) => _maxPitch = amount;
+        
+        public EngineSounds(Rigidbody rigidbody, AudioSource audioSource)
         {
-            _rigidbody = GetComponent<Rigidbody>();
-            _audioSource = GetComponent<AudioSource>();
+            _rigidbody = rigidbody;
+            _audioSource = audioSource;
         }
-
-        private void Update()
-        {
-            ControllSounds();
-        }
-
+        
         public void ControllSounds()
         {
             _currentSpeed = _rigidbody.velocity.magnitude;

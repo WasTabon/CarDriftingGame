@@ -1,52 +1,26 @@
-using System;
 using System.Collections.Generic;
 using CarDriftingGame.UI.MainScene;
-using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace CarDriftingGame.Levels.MainScene
 {
-    public class PlayerLights : MonoBehaviour
+    public class PlayerLights
     {
-        public enum Side
-        {
-            Front,
-            Back
-        }
-        
-        [Serializable]
-        public struct Light
-        {
-            public GameObject lightObj;
-            public Side side;
-        }
-
-        [FormerlySerializedAs("_Lights")] public List<Light> _lights;
+        private List<Light> _lights;
         private PlayerMovement _playerMovement;
-        private UIController _uiController;
+        [Inject] private UIController _uiController;
 
         private bool _isBackLightOn;
 
-        [Inject]
-        private void Construct(UIController uiController)
+        public PlayerLights(PlayerMovement playerMovement, List<Light> lights)
         {
-            _uiController = uiController;
-        }
-        
-        private void Start()
-        {
-            _playerMovement = GetComponent<PlayerMovement>();
-
-            _uiController.LightPressed += HandeFrontLight;
+            _playerMovement = playerMovement;
+            _lights = lights;
+            
+            //_uiController.LightPressed += HandeFrontLight;
         }
 
-        private void Update()
-        {
-            HandleBackLight();
-        }
-
-        public void HandeFrontLight()
+        private void HandeFrontLight()
         {
             foreach (Light light in _lights)
             {

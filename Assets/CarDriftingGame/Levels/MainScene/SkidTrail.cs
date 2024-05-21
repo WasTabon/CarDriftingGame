@@ -1,24 +1,22 @@
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace CarDriftingGame.Levels.MainScene
 {
-    public class SkidTrail : MonoBehaviour
+    public class SkidTrail
     {
+        private List<Wheel> _wheels;
+        
         private PlayerMovement _playerMovement;
 
-        private void Start()
+        public SkidTrail(List<Wheel> wheels, PlayerMovement playerMovement)
         {
-            _playerMovement = GetComponent<PlayerMovement>();
+            _wheels = wheels;
+            _playerMovement = playerMovement;
         }
-
-        private void FixedUpdate()
-        {
-            WheelEffects();
-        }
-
+        
         public void WheelEffects()
         {
-            foreach (Wheel wheel in _playerMovement._wheels)
+            foreach (Wheel wheel in _wheels)
             {
                 if (wheel.axel == Axel.Rear)
                 {

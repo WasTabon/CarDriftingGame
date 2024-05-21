@@ -1,42 +1,23 @@
-using System;
 using System.Collections.Generic;
 using CarDriftingGame.System.Input;
 using UnityEngine;
-using Zenject;
 
 namespace CarDriftingGame.Levels.MainScene
 {
-    public enum Axel
-    {
-        Front,
-        Rear
-    }
-
-    [Serializable]
-    public struct Wheel
-    {
-        public GameObject wheelModel;
-        public WheelCollider wheelCollider;
-        public TrailRenderer trailRenderer;
-        public ParticleSystem particleSystem;
-        public Axel axel;
-    }
-
-    [RequireComponent(typeof(Rigidbody))]
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement
     {
         private const int MultiplierMove = 600;
         private const float Interpolation = 0.6f;
         
-        [SerializeField] private float _maxAcceleration = 30f;
-        [SerializeField] private float _brakeAcceleration = 50f;
+        private float _maxAcceleration = 130f;
+        private float _brakeAcceleration = 3000f;
 
-        [SerializeField] private float _turnSensivity = 1.0f;
-        [SerializeField] private float _maxSteerAngle = 30.0f;
+        private float _turnSensivity = 1.0f;
+        private float _maxSteerAngle = 40.0f;
 
-        [SerializeField] private Vector3 _centerOfMass;
+        private Vector3 _centerOfMass = new Vector3(0, -0.25f, -1f);
 
-        [field: SerializeField] public List<Wheel> _wheels { get; private set; }
+        private List<Wheel> _wheels;
 
         private InputManager _inputManager;
         private Rigidbody _rigidbody;
@@ -47,28 +28,14 @@ namespace CarDriftingGame.Levels.MainScene
         private float _horizontalInput;
 
         private float _sidewaysSlipThreshold = 0.5f;
-
-        [Inject]
-        private void Construct(InputManager inputManager)
+        
+        public PlayerMovement(InputManager inputManager, Rigidbody rigidbody, List<Wheel> wheels)
         {
             _inputManager = inputManager;
+            _rigidbody = rigidbody;
+            _wheels = wheels;
         }
-
-        private void Start()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-
-            _rigidbody.centerOfMass = _centerOfMass;
-        }
-
-        private void FixedUpdate()
-        {
-            HandleMovement();
-            Steer();
-            
-            AnimateWheels();
-            IsDrifting();
-        }
+        
 
         public void HandleMovement()
         {
